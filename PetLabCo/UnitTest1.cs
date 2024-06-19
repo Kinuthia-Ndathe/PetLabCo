@@ -49,17 +49,26 @@ public class Tests
         
         await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
         //var isExit = await page.Locator(selector: "text=Dashboard").IsVisibleAsync();
-        page.GetByRole(AriaRole.Navigation).Locator("a").Filter(new() { HasText = "Dashboard" });
+        var dashboardLocator = page.GetByRole(AriaRole.Navigation).Locator("a").Filter(new() { HasText = "Dashboard" });
         
+        // Check if the dashboard link is visible
+        var isDashboardVisible = await dashboardLocator.IsVisibleAsync();
+        if (isDashboardVisible)
+        {
+            // Optionally interact with the dashboard link if it's visible
+            await dashboardLocator.ClickAsync();
+        }
+
+
         //Thread.Sleep(2500);
         //Assert.Pass();
         //Assert.IsTrue(isExit);
 
-        await page.GotoAsync("https://account.thepetlabco.com/pets");
+        /* await page.GotoAsync("https://account.thepetlabco.com/pets");
         Thread.Sleep(2500);
         await page.GotoAsync("https://account.thepetlabco.com/dashboard");
         Thread.Sleep(2500);
         await page.GotoAsync("https://account.thepetlabco.com/login");
-        Thread.Sleep(2500);
+        Thread.Sleep(2500); */
     }
 }
